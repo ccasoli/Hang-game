@@ -1,5 +1,8 @@
 #ecran d affichage pour choisir difficulte
 def welcome
+    puts "  si tu as l erreur : "
+    puts "  invalid byte sequence in UTF-8"
+    puts "relance le program jusqu a ne plus l avoir"
     puts ""
     puts "  -------Bienvenue dans mon jeu du pendu------"
     puts " |                                            "
@@ -9,23 +12,22 @@ def welcome
     puts " | 2 -> moyen                                 "
     puts " | 3 -> difficile                             "
     puts " |                                            "
-    puts " --------------------------------------------- "
 end
 
 #return la difficulte, oblig a choisir 1 2 3  
 def difficulty
-    print "-> "
+    print " | -> "
     dif = gets.chomp.to_i
     while dif < 1 || dif > 3
-        puts ""
+        puts " |"
         puts "  ----------Choisi une difficulté : ----------"
         puts " |                                            "
         puts " | 1 -> facile                                "
         puts " | 2 -> moyen                                 "
         puts " | 3 -> difficile                             "
         puts " |                                            "
-        puts " --------------------------------------------- "
-        puts "-> "
+        print " | -> "
+        puts " |                                            "
         dif = gets.chomp.to_i
     end
     return dif
@@ -102,6 +104,12 @@ def try_word(w)
                 i+=1
             end
         end
+        if !(empty_word.include?('-'))
+            puts " |"
+            puts " | gagner "
+            puts " |"
+            play_again
+        end
         try-=1
         i=0
         puts " |"
@@ -109,7 +117,11 @@ def try_word(w)
         puts " | "
         input = input_letter
     end
-    puts "no more try byby"
+    puts " |"
+    puts " | fini"
+    puts " |"
+    play_again
+
 end
 
 #rentrer une lettre
@@ -119,6 +131,31 @@ def input_letter
     return input
 end
 
-try_word(word)
+#lance la martie
+def play
+    welcome
+    try_word(word)
+end
 
-#welcome
+#demande au joueur si il veut rejouer
+def play_again
+    puts " | tu veux rejouer ? o/n "
+    puts " | "
+    print " | -> "
+    p = gets.chomp
+    while p != "o" || p != "n"
+        if p == "o"
+            play
+        else
+            puts "      by      "
+            break
+        end
+        puts " | "
+        puts " | press o ou n "
+        puts " | "
+        print " | -> "
+        p = gets.chomp.to_s
+    end
+end
+
+play
